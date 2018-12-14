@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--
+  ~ Copyright (c) 2018. Hubery
+  ~
+  ~ Permission is hereby granted, free of charge, to any person obtaining a copy
+  ~ of this software and associated documentation files (the "Software"), to deal
+  ~ in the Software without restriction, including without limitation the rights
+  ~ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  ~ copies of the Software, and to permit persons to whom the Software is
+  ~ furnished to do so, subject to the following conditions:
+  ~
+  ~ The above copyright notice and this permission notice shall be included in all
+  ~ copies or substantial portions of the Software.
+  ~
+  ~ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  ~ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  ~ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  ~ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  ~ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  ~ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  ~ SOFTWARE.
+  ~
+  -->
+
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>虚拟身份</title>
+
+    <STYLE type="text/css">
+        input[type="text"] {
+            width: 200px;
+        }
+        input[type="date"] {
+            width: 200px;
+        }
+        fieldset{
+            margin-top: 10%;
+            margin-left: auto;
+            margin-right: auto;
+            width: 25%;
+        }
+    </STYLE>
+</head>
+<body>
+
+<form th:object="${vid}" action="/vid/save" method="post">
+
+    <fieldset>
+        <legend>虚拟身份</legend>
+        <input type="hidden" th:value="*{id}"/>
+        <table>
+            <!--<caption>虚拟身份</caption>-->
+
+            <tr>
+                <td><label>虚拟世界：</label></td>
+                <td><input type="text" th:value="*{world}"/></td>
+            </tr>
+            <tr>
+                <td><label>虚拟身份：</label></td>
+                <td><input type="text" th:value="*{identity}"/></td>
+            </tr>
+            <tr>
+                <td><label>密码：</label></td>
+                <td><input type="text" th:value="*{password}"/></td>
+            </tr>
+            <tr>
+                <td><label>备注：</label></td>
+                <td><input type="text" th:value="*{comment}"/></td>
+            </tr>
+            <tr>
+                <td><label>创建时间：</label></td>
+                <td><input type="date" th:value="*{createTime}" readonly/></td>
+            </tr>
+            <tr>
+                <td><label>修改时间：</label></td>
+                <td><input type="date" th:value="*{modifiedTime}" readonly/></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" value="保存"/></td>
+            </tr>
+        </table>
+
+    </fieldset>
+</form>
+</body>
+</html>

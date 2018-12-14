@@ -31,7 +31,7 @@ public class CollapsarApplicationTests {
 		virtualIdentity.setIdentity("Hubery.Lee@outlook.com");
 		virtualIdentity.setPassword("xbk11@github");
 
-		virtualIdentityManageService.addVirtualIdentity(virtualIdentity);
+		virtualIdentityManageService.saveVirtualIdentity(virtualIdentity);
 	}
 
 	@Test

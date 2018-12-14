@@ -21,41 +21,53 @@
  *
  */
 
-package pers.hubery.collapsar.service;
+package pers.hubery.collapsar.controller;
 
-import pers.hubery.collapsar.entity.VirtualIdentity;
-
-import java.util.List;
-import java.util.Optional;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 /**
- * 虚拟身份管理服务
+ * Restful风格controller
  *
  * @author Hubery
- * @version VirtualIdentityManageService.java, 2018年11月19日 23:35
+ * @version RestfulController.java, 2018年11月21日 00:13
  */
-public interface VirtualIdentityManageService {
+@RestController
+public class RestfulController {
 
     /**
-     * Add virtual identity.
+     * Welcome string.
+     * <p>命令式的、同步阻塞</p>
+     * <p>http://localhost:8888/hi</p>
      *
-     * @param virtualIdentity the virtual identity
-     * @return the virtual identity
+     * @return the string
      */
-    VirtualIdentity saveVirtualIdentity(VirtualIdentity virtualIdentity);
+    @GetMapping("/hi")
+    public String hi(String name) {
+        return "Hi, " + resolveName(name);
+    }
 
     /**
-     * Find all virtual identities list.
+     * Hello mono.
+     * <p>reactive模式：响应式的、异步非阻塞</p>
+     * <p>http://localhost:8888/hello?name=hubery</p>
      *
-     * @return the list
+     * @param name the name
+     * @return the mono
      */
-    List<VirtualIdentity> findAll();
+    @GetMapping("/hello")
+    public Mono<String> hello(String name) {
+        return Mono.just("Hello, " + resolveName(name));
+    }
 
     /**
-     * Find by id virtual identity.
-     *
-     * @param id the id
-     * @return the virtual identity
+     * return name if name is not empty, else world.
+     * @param name
+     * @return
      */
-    Optional<VirtualIdentity> findById(Integer id);
+    private String resolveName(String name) {
+        return (StringUtils.isEmpty(name) ? "world" : name);
+    }
 }

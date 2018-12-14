@@ -21,70 +21,63 @@
  *
  */
 
-package pers.hubery.collapsar.service.impl;
+package pers.hubery.collapsar.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import pers.hubery.collapsar.entity.VirtualIdentity;
-import pers.hubery.collapsar.repository.VirtualIdentityRepository;
 import pers.hubery.collapsar.service.VirtualIdentityManageService;
 
-import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 /**
- * 虚拟身份管理服务实现
- *
+ * 虚拟身份Controller
  * @author Hubery
- * @version VirtualIdentityManageServiceImpl.java, 2018年11月19日 23:39
+ * @version VidController.java, 2018年12月14日 01:37
  */
-@Service
-@Transactional(rollbackOn = Exception.class)
-public class VirtualIdentityManageServiceImpl implements VirtualIdentityManageService {
+@RestController
+@RequestMapping("/vid")
+public class VidController {
 
     @Autowired
-    private VirtualIdentityRepository virtualIdentityRepository;
+    private VirtualIdentityManageService virtualIdentityManageService;
 
     /**
-     * Add virtual identity.
-     *
-     * @param virtualIdentity the virtual identity
-     */
-    @Override
-    public VirtualIdentity saveVirtualIdentity(VirtualIdentity virtualIdentity) {
-
-        return virtualIdentityRepository.save(virtualIdentity);
-    }
-
-    /**
-     * Find all virtual identities list.
+     * Find all list.
      *
      * @return the list
      */
-    @Override
+    @GetMapping("/findAll")
     public List<VirtualIdentity> findAll() {
-
-        Iterable<VirtualIdentity> virtualIdentities = virtualIdentityRepository.findAll();
-
-        List<VirtualIdentity> virtualIdentityList = new ArrayList<>();
-
-        virtualIdentities.forEach(virtualIdentity -> {
-            virtualIdentityList.add(virtualIdentity);
-        });
-
-        return virtualIdentityList;
+        return virtualIdentityManageService.findAll();
     }
 
     /**
-     * Find by id virtual identity.
+     * Find virtual identity by id .
      *
      * @param id the id
      * @return the virtual identity
      */
-    @Override
-    public Optional<VirtualIdentity> findById(Integer id) {
-        return virtualIdentityRepository.findById(id);
+    @GetMapping("/findById")
+    public VirtualIdentity findById(Integer id) {
+
+        Optional<VirtualIdentity> vid = virtualIdentityManageService.findById(id);
+
+        return vid.orElseThrow(() -> new RuntimeException("不存在对应的记录！id：" + id));
+    }
+
+    /**
+     * Save virtual identity .
+     *
+     * @param vid the vid
+     * @return the virtual identity
+     */
+    @PostMapping("/save")
+    public VirtualIdentity saveVirtualIdentity(VirtualIdentity vid) {
+        return virtualIdentityManageService.saveVirtualIdentity(vid);
     }
 }
