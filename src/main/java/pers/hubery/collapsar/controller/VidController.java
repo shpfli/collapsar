@@ -36,6 +36,7 @@ import java.util.Optional;
 
 /**
  * 虚拟身份Controller
+ *
  * @author Hubery
  * @version VidController.java, 2018年12月14日 01:37
  */
@@ -80,4 +81,5 @@ public class VidController {
     public VirtualIdentity saveVirtualIdentity(VirtualIdentity vid) {
         return virtualIdentityManageService.saveVirtualIdentity(vid);
     }
+
 }

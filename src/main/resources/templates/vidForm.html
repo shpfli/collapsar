@@ -31,10 +31,12 @@
         input[type="text"] {
             width: 200px;
         }
+
         input[type="date"] {
             width: 200px;
         }
-        fieldset{
+
+        fieldset {
             margin-top: 10%;
             margin-left: auto;
             margin-right: auto;
@@ -44,37 +46,43 @@
 </head>
 <body>
 
-<form th:object="${vid}" action="/vid/save" method="post">
+<form th:object="${vid}" action="/view/vid/save" method="post">
 
     <fieldset>
         <legend>虚拟身份</legend>
-        <input type="hidden" th:value="*{id}"/>
+        <input name="id" type="hidden" th:value="*{id}"/>
         <table>
             <!--<caption>虚拟身份</caption>-->
 
             <tr>
                 <td><label>虚拟世界：</label></td>
-                <td><input type="text" th:value="*{world}"/></td>
+                <td><input name="world" type="text" th:value="*{world}"/></td>
             </tr>
             <tr>
                 <td><label>虚拟身份：</label></td>
-                <td><input type="text" th:value="*{identity}"/></td>
+                <td><input name="identity" type="text" th:value="*{identity}"/></td>
             </tr>
             <tr>
                 <td><label>密码：</label></td>
-                <td><input type="text" th:value="*{password}"/></td>
+                <td><input name="password" type="text" th:value="*{password}"/></td>
             </tr>
             <tr>
                 <td><label>备注：</label></td>
-                <td><input type="text" th:value="*{comment}"/></td>
+                <td><input name="comment" type="text" th:value="*{comment}"/></td>
             </tr>
             <tr>
                 <td><label>创建时间：</label></td>
-                <td><input type="date" th:value="*{createTime}" readonly/></td>
+                <td>
+                    <input name="createTime" type="hidden" th:value="${#dates.format(vid.createTime,'yyyy-MM-dd HH:mm:ss')}"
+                           th:text="${#dates.format(vid.createTime,'yyyy-MM-dd HH:mm:ss')}"/>
+                </td>
             </tr>
             <tr>
                 <td><label>修改时间：</label></td>
-                <td><input type="date" th:value="*{modifiedTime}" readonly/></td>
+                <td>
+                    <input name="modifiedTime" type="hidden" th:value="${#dates.format(vid.modifiedTime,'yyyy-MM-dd HH:mm:ss')}"/>
+                    <span name="modifiedTime" th:text="${#dates.format(vid.modifiedTime,'yyyy-MM-dd HH:mm:ss')}"/>
+                </td>
             </tr>
             <tr>
                 <td colspan="2" align="center"><input type="submit" value="保存"/></td>

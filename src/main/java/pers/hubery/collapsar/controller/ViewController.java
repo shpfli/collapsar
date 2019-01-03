@@ -27,18 +27,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import pers.hubery.collapsar.entity.VirtualIdentity;
 import pers.hubery.collapsar.service.VirtualIdentityManageService;
 
+import java.util.Date;
 import java.util.List;
 
 /**
  * The type View controller.
+ *
  * @author Hubery
  * @version ViewController.java, 2018年12月14日 00:43
  */
 @Controller
+@RequestMapping("/view")
 public class ViewController {
 
     @Autowired
@@ -69,11 +73,39 @@ public class ViewController {
         return "vidSpace";
     }
 
-    @RequestMapping("/vidForm/{id}")
+    @RequestMapping("/vid/modify/{id}")
     public String vidForm(ModelMap modelMap, @PathVariable Integer id) {
 
         VirtualIdentity vid = virtualIdentityManageService.findById(id).orElseGet(() -> new VirtualIdentity());
         modelMap.put("vid", vid);
         return "vidForm";
+    }
+
+    @RequestMapping("/vid/add")
+    public String addVid(ModelMap modelMap) {
+
+        VirtualIdentity vid = new VirtualIdentity();
+        Date now = new Date();
+        vid.setCreateTime(now);
+        vid.setModifiedTime(now);
+        modelMap.put("vid", vid);
+
+        return "vidForm";
+    }
+
+    /**
+     * Save virtual identity .
+     *
+     * @param vid the vid
+     * @return 保存成功后展示vidSpace
+     */
+    @PostMapping("/vid/save")
+    public String saveVirtualIdentity(ModelMap modelMap, VirtualIdentity vid) {
+
+        virtualIdentityManageService.saveVirtualIdentity(vid);
+
+        List<VirtualIdentity> virtualIdentityList = virtualIdentityManageService.findAll();
+        modelMap.put("vidList", virtualIdentityList);
+        return "redirect:/view/vidSpace";
     }
 }

@@ -31,6 +31,7 @@ import pers.hubery.collapsar.service.VirtualIdentityManageService;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,6 +56,14 @@ public class VirtualIdentityManageServiceImpl implements VirtualIdentityManageSe
     @Override
     public VirtualIdentity saveVirtualIdentity(VirtualIdentity virtualIdentity) {
 
+        Date now = new Date();
+
+        if (virtualIdentity.getCreateTime() == null) {
+            virtualIdentity.setCreateTime(now);
+        }
+
+        //每次保存更新时间
+        virtualIdentity.setModifiedTime(now);
         return virtualIdentityRepository.save(virtualIdentity);
     }
 

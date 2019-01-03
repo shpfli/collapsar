@@ -59,9 +59,10 @@
         <td th:text="${vid.comment}">备注</td>
         <td th:text="${vid.createTime}">创建时间</td>
         <td th:text="${vid.modifiedTime}">修改时间</td>
-        <td><a th:href="@{/vidForm/{id}(id=${vid.id})}">编辑</a></td>
+        <td><a th:href="@{/view/vid/modify/{id}(id=${vid.id})}">编辑</a></td>
     </tr>
     </tbody>
 </table>
+<a href="/view/vid/add">add a new virtual identity</a>
 </body>
 </html>
